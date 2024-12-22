@@ -1,11 +1,20 @@
+import { configureStore } from '@reduxjs/toolkit';
+import { createStore } from 'redux';
+import persistReducer from 'redux-persist/es/persistReducer';
+import persistStore from 'redux-persist/es/persistStore';
+import storage from 'redux-persist/lib/storage';
+import formReducers from './slice'
 
-const initialState = {
-    count:0,        
-}
 
+const persistConfig= {
+    key:'root',
+    storage,
+};
 
-const formReducer = (state= initialState,action) => {
-    switch(action.type){
+const persistedReducer = persistReducer(persistConfig,formReducers);
+const store=configureStore({
+    reducer:persistedReducer
+})
 
-    }
-}
+export const persistor=persistStore(store);
+export default store;
